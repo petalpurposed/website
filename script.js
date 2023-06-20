@@ -2,7 +2,7 @@ window.addEventListener("load", function () {
   const preloader = document.querySelector(".preloader");
   setTimeout(function () {
     preloader.style.display = "none";
-  }, 1000);
+  }, 1500);
 });
 
 const hamMenu = document.getElementById('ham-menu');
