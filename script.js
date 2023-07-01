@@ -1,51 +1,30 @@
-window.addEventListener("load", function () {
+window.addEventListener("DOMContentLoaded", function () {
   const preloader = document.querySelector(".preloader");
   setTimeout(function () {
     preloader.style.display = "none";
   }, 1500);
 });
 
-const hamMenu = document.getElementById('ham-menu');
+const hamMenu = document.querySelector('.hamburger');
 const navBar = document.getElementById('nav-bar');
+const navLinks = navBar.querySelectorAll('li a');
+const homeTab = document.getElementById('hometab');
 
 hamMenu.addEventListener('click', function () {
+  hamMenu.classList.toggle('active');
   navBar.classList.toggle('active');
-
-  if (!navBar.classList.contains('active')) {
-    // Delay scrolling until the menu is completely closed
-    setTimeout(function () {
-      scrollOnClick();
-    }, 500); // Adjust the delay time (in milliseconds) as needed
-  }
 });
 
-// Hometab
-const navLinks = document.querySelectorAll('#nav-bar li a');
-
-// Add event listeners for each link
 navLinks.forEach(link => {
-  link.addEventListener('mouseover', () => {
-    // Remove the "active" class from the "hometab" link
-    document.getElementById('hometab').classList.remove('active');
-  });
-
-  link.addEventListener('mouseout', () => {
-    // Add the "active" class back to the "hometab" link
-    document.getElementById('hometab').classList.add('active');
-  });
-
   link.addEventListener('click', (event) => {
     const href = link.getAttribute('href');
     const isInternalLink = href.startsWith('#') || href.startsWith(window.location.origin);
 
     if (isInternalLink) {
       event.preventDefault();
+      hamMenu.classList.remove('active');
       navBar.classList.remove('active');
-
-      // Delay scrolling until the menu is completely closed
-      setTimeout(function () {
-        scrollOnClick(link);
-      }, 300); // Adjust the delay time (in milliseconds) as needed
+      scrollOnClick(link);
     }
   });
 });
@@ -54,7 +33,18 @@ function scrollOnClick(link) {
   const targetId = link ? link.getAttribute('href') : '#home';
   const targetSection = document.querySelector(targetId);
 
-  targetSection.scrollIntoView({
-    behavior: 'smooth'
-  });
+  // Delay scrolling until the menu is completely closed
+  setTimeout(function () {
+    targetSection.scrollIntoView({
+      behavior: 'smooth'
+    });
+  }, 300); // Adjust the delay time (in milliseconds) as needed
 }
+
+homeTab.addEventListener('mouseover', () => {
+  homeTab.classList.remove('active');
+});
+
+homeTab.addEventListener('mouseout', () => {
+  homeTab.classList.add('active');
+});
